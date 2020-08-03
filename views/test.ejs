@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<input id="my_input" type="text">
+	<button id="my_button">Send a Message</button>
+	<button id="my_button_find">Find a Message</button>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		/*
+
+		button 객체가 클릭되면, input 객체의 값을 서버로 보내자.
+
+		*/
+		$("#my_button").click(function (){
+			// input 객체의 값을
+			let value = $("#my_input").val();
+
+			// 서버로 보내자
+			// 서버한테 요청, 응답
+			$.ajax({
+				method: 'POST', // RESTful API
+				url: '/message', // it means "http://127.0.0.1:8080/message"
+				data: {
+					message: value
+				},
+				success: function(response) {
+					alert(response);
+				}
+			});
+		});
+
+		$("#my_button_find").click(function (){
+			// 서버한테 요청, 응답
+			$.ajax({
+				method: 'GET', // RESTful API
+				url: '/message', // it means "http://127.0.0.1:8080/message"
+				success: function(response) {
+					alert(response);
+				}
+			});
+		});
+	</script>
+</body>
+</html>
