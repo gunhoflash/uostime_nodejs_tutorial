@@ -31,17 +31,35 @@ app.get('/message', function(req, res) {
 // 'post' method, '/message' url
 app.post('/message', function(req, res) {
 	let message = req.body.message;
+	let author = req.body.author;
 
-	MessageController.createMessage(message);
+	MessageController.createMessage(message, author);
 
-	console.log('User say: ' + message);
+	console.log('User say: ' + message + 'and the author is: ' + author);
 	res.send('Server got a message: ' + message);
+});
+
+// 'put' method, '/message' url
+app.put('/message', function(req, res) {
+	let message = req.body.message;
+	let author = req.body.author;
+
+	MessageController.updateMessage(message, author);
+
+	console.log('update message: ' + message + 'where the author is: ' + author);
+	res.send('Update tried');
+});
+
+// 'delete' method, '/message' url
+app.delete('/message', function(req, res) {
+	MessageController.deleteMessage(res);
 });
 
 // DB 연결
 mongoose.connect(keys.mongoDB, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	createIndexes: true
 }, function(err) {
 	if (err) {
 		// DB연결 시 에러가 있었으면 그 에러를 출력하자

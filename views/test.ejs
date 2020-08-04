@@ -6,9 +6,16 @@
 	<title>Document</title>
 </head>
 <body>
+	<label for="my_input">Content</label>
 	<input id="my_input" type="text">
+
+	<label for="my_author">Author</label>
+	<input id="my_author" type="text">
+
 	<button id="my_button">Send a Message</button>
 	<button id="my_button_find">Find a Message</button>
+	<button id="my_button_delete">Delete all Messages</button>
+	<button id="my_button_update">Update a Message</button>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
@@ -20,6 +27,7 @@
 		$("#my_button").click(function (){
 			// input 객체의 값을
 			let value = $("#my_input").val();
+			let author = $("#my_author").val();
 
 			// 서버로 보내자
 			// 서버한테 요청, 응답
@@ -27,7 +35,8 @@
 				method: 'POST', // RESTful API
 				url: '/message', // it means "http://127.0.0.1:8080/message"
 				data: {
-					message: value
+					message: value,
+					author: author
 				},
 				success: function(response) {
 					alert(response);
@@ -41,7 +50,37 @@
 				method: 'GET', // RESTful API
 				url: '/message', // it means "http://127.0.0.1:8080/message"
 				success: function(response) {
-					alert(response);
+					alert(JSON.stringify(response));
+				}
+			});
+		});
+
+		$("#my_button_delete").click(function (){
+			// 서버한테 요청, 응답
+			$.ajax({
+				method: 'DELETE', // RESTful API
+				url: '/message', // it means "http://127.0.0.1:8080/message"
+				success: function(response) {
+					alert(JSON.stringify(response));
+				}
+			});
+		});
+
+		$("#my_button_update").click(function (){
+			// input 객체의 값을
+			let value = $("#my_input").val();
+			let author = $("#my_author").val();
+
+			// 서버한테 요청, 응답
+			$.ajax({
+				method: 'PUT', // RESTful API
+				url: '/message', // it means "http://127.0.0.1:8080/message"
+				data: {
+					message: value,
+					author: author
+				},
+				success: function(response) {
+					alert(JSON.stringify(response));
 				}
 			});
 		});
